@@ -84,3 +84,9 @@ This widget gets the most-recent available exchange rate data from Blockchain.in
 
 = 1.0 =
 This version is the newly released plugin - install it if you want it ;)
+
+= 1.0.1 =
+Code and style cleanup
+
+= 1.0.2 =
+Styling and UI improvements

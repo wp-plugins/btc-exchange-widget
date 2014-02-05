@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: Jacob Baron
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://jacobbaron.net
 */
 
@@ -83,12 +83,12 @@ class btc_widget extends WP_Widget {
 			}
 		</script>
         <div style="text-align:center;">
-		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4"/> BTC = 
+		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4" style="width:48px;"/> BTC = 
         <span id="up"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'.round(ceil($j->USD->{'15m'}*100))/100; ?></span> <br><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			?>
-			<option data-symbol="<?= $o[$c]->{'symbol'} ?>" value="<?= round(ceil($o[$c]->{'15m'}*100))/100 ?>"><?= $c ?></option>
+			<option data-symbol="<?= $o[$c]->{'symbol'} ?>" value="<?= round(ceil($o[$c]->{'15m'}*100))/100 ?>"><?= "(".$o[$c]->{'symbol'}.") ".$c ?></option>
 			<?php
 		}
 		?>
