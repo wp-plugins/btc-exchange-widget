@@ -79,12 +79,12 @@ class btc_widget extends WP_Widget {
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#btc_amt').val();
 				v = Math.round(v*b*100)/100;
-				jQuery('#up').html('<strong style="font-size:1.2em;vertical-align:top;position:relative;top:.1em;margin-right:.1em">'+s+'</strong>' + v.toString());
+				jQuery('#up').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>' + v.toString());
 			}
 		</script>
         <div style="text-align:center;">
 		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4"/> BTC = 
-        <span id="up"><?php echo '<strong style="font-size:1.2em;vertical-align:top;position:relative;top:.1em;margin-right:.1em">'.$j->USD->symbol.'</strong>'.round(ceil($j->USD->{'15m'}*100))/100; ?></span> <br><br>
+        <span id="up"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'.round(ceil($j->USD->{'15m'}*100))/100; ?></span> <br><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			?>
