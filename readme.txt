@@ -1,6 +1,6 @@
-=== Plugin Name ===
+=== BTC Exchange Widget ===
 Contributors: csmicfool
-Donate link: http://jacobbaron.net/?page_id=3516
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C2A8GHH997USA
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
 Tested up to: 3.8.1
@@ -8,34 +8,37 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple widget for converting Bitcoin to multiple currencies.
+BTC Exchange Widget Plugin adds a simple widget for converting Bitcoin to multiple currencies.  This plugin uses live data to provide accurate exchange rates.
 
 == Description ==
 
-Simple widget for converting Bitcoin to multiple currencies.
+<p>Simple widget for converting Bitcoin to multiple currencies.</p>
 
-List of currently supported currencies:
-* USD
-* CNY
-* JPY
-* SGD
-* HKD
-* CAD
-* AUD
-* NZD
-* GBP
-* DKK
-* SEK
-* BRL
-* CHF
-* EUR
-* RUB
-* SLL
-* PLN
-* THB
+<p>List of currently supported currencies:
+<ul>
+<li>USD</li>
+<li>CNY</li>
+<li>JPY</li>
+<li>SGD</li>
+<li>HKD</li>
+<li>CAD</li>
+<li>AUD</li>
+<li>NZD</li>
+<li>GBP</li>
+<li>DKK</li>
+<li>SEK</li>
+<li>BRL</li>
+<li>CHF</li>
+<li>EUR</li>
+<li>RUB</li>
+<li>SLL</li>
+<li>PLN</li>
+<li>THB</li>
+</ul>
+</p>
 
-This plugin reads remote data from blockchain.info in order to provide accurate and up-to-date exchange rates.
-* OpenSSL or equivalent module must be enabled to utilize this remote data.
+<p>This plugin reads remote data from blockchain.info in order to provide accurate and up-to-date exchange rates.
+<ul><li>*OpenSSL or equivalent module must be enabled to utilize this remote data.*</li></ul></p>
 
 == Installation ==
 
