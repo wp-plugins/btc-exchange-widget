@@ -6,7 +6,7 @@
 Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
-Author: Jacob Baron
+Author: csmicfool
 Version: 1.0.2
 Author URI: http://jacobbaron.net
 */
