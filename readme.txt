@@ -8,7 +8,7 @@ Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BTC Exchange Widget Plugin adds a simple widget for converting Bitcoin to multiple currencies.  This plugin uses live data to provide accurate exchange rates.
+BTC Exchange Widget Plugin adds a simple converter from Bitcoin to multiple currencies.  This plugin uses live data to provide accurate exchange rates.
 
 == Description ==
 
@@ -36,7 +36,7 @@ BTC Exchange Widget Plugin adds a simple widget for converting Bitcoin to multip
 <li>THB</li>
 </ul>
 </p>
-
+<br>
 <p>This plugin reads remote data from blockchain.info in order to provide accurate and up-to-date exchange rates.
 <ul><li>*OpenSSL or equivalent module must be enabled to utilize this remote data.*</li></ul></p>
 
