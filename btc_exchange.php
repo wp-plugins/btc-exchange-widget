@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://jacobbaron.net
 */
 
@@ -71,6 +71,9 @@ class btc_widget extends WP_Widget {
 				jQuery('#btc_amt').keyup(function(){
 					update_exc();
 				});
+				jQuery('#cur_amt').keyup(function(){
+					update_exc_rev();
+				});
 			});
 			function update_exc(){
 				var t = jQuery('#crsel').find('option:selected');
@@ -79,12 +82,22 @@ class btc_widget extends WP_Widget {
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#btc_amt').val();
 				v = Math.round(v*b*100)/100;
-				jQuery('#up').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>' + v.toString());
+				jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>');
+				jQuery('#cur_amt').val(v.toString());
+			}
+			function update_exc_rev(){
+				var t = jQuery('#crsel').find('option:selected');
+				console.log(t);
+				var s = t.data('symbol');	
+				var v = jQuery('#crsel').val();
+				var b = jQuery('#cur_amt').val();
+				v = Math.round((b/v)*1000000)/1000000;
+				jQuery('#btc_amt').val(v.toString());
 			}
 		</script>
         <div style="text-align:center;">
-		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4" style="width:48px;"/> BTC = 
-        <span id="up"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'.round(ceil($j->USD->{'15m'}*100))/100; ?></span> <br><br>
+		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4" style="width:auto;min-width:68px;max-width:100px;"/> BTC = 
+        <span id="up"><span id="cur_symbol"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'; ?></span> <input type="text" name="cur_amt" id="cur_amt" value="<?= round(ceil($j->USD->{'15m'}*100))/100 ?>" size="8" style="width:auto;min-width:68px;max-width:100px;"/></span> <br><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			?>
