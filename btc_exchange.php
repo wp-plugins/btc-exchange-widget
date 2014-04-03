@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.0.4
+Version: 1.0.5
 Author URI: http://jacobbaron.net
 */
 
@@ -81,9 +81,9 @@ class btc_widget extends WP_Widget {
 				var s = t.data('symbol');	
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#btc_amt').val();
-				v = Math.round(v*b*100)/100;
+				v = v*b;
 				jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>');
-				jQuery('#cur_amt').val(v.toString());
+				jQuery('#cur_amt').val(v.toFixed(2).toString());
 			}
 			function update_exc_rev(){
 				var t = jQuery('#crsel').find('option:selected');
@@ -91,17 +91,17 @@ class btc_widget extends WP_Widget {
 				var s = t.data('symbol');	
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#cur_amt').val();
-				v = Math.round((b/v)*1000000)/1000000;
-				jQuery('#btc_amt').val(v.toString());
+				v = (b/v);
+				jQuery('#btc_amt').val(v.toFixed(2).toString());
 			}
 		</script>
         <div style="text-align:center;">
-		<input type="text" name="btc_amt" id="btc_amt" value="1" size="4" style="width:auto;min-width:68px;max-width:100px;"/> BTC = 
-        <span id="up"><span id="cur_symbol"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'; ?></span> <input type="text" name="cur_amt" id="cur_amt" value="<?= round(ceil($j->USD->{'15m'}*100))/100 ?>" size="8" style="width:auto;min-width:68px;max-width:100px;"/></span> <br><br>
+		<input type="text" name="btc_amt" id="btc_amt" value="<?= $instance['default_value'] ?>" size="4" style="width:auto;min-width:68px;max-width:100px;"/> BTC = 
+        <span id="up"><span id="cur_symbol"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'; ?></span> <input type="text" name="cur_amt" id="cur_amt" value="<?= number_format((($j->USD->{'15m'}*$instance['default_value'])),2,'.','') ?>" size="8" style="width:auto;min-width:68px;max-width:100px;"/></span> <br><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			?>
-			<option data-symbol="<?= $o[$c]->{'symbol'} ?>" value="<?= round(ceil($o[$c]->{'15m'}*100))/100 ?>"><?= "(".$o[$c]->{'symbol'}.") ".$c ?></option>
+			<option data-symbol="<?= $o[$c]->{'symbol'} ?>" value="<?= number_format($o[$c]->{'15m'},2,'.','') ?>"><?= "(".$o[$c]->{'symbol'}.") ".$c ?></option>
 			<?php
 		}
 		?>
@@ -120,13 +120,18 @@ class btc_widget extends WP_Widget {
 		if ( isset( $instance[ 'title' ] ) ) {
 			$title = $instance[ 'title' ];
 		}
+		if ( isset( $instance[ 'default_value' ] ) ) {
+			$default_value = $instance[ 'default_value' ];
+		}
 		else {
 			$title = __( 'Bitcoin Exchange Rate', 'text_domain' );
+			$default_value = 1;
 		}
 		?>
 		<p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>"><br/>
+            <label for="<?php echo $this->get_field_id( 'default_value' ); ?>"><?php _e( 'Default Value:' ); ?></label> <input class="" id="<?php echo $this->get_field_id( 'default_value' ); ?>" name="<?php echo $this->get_field_name( 'default_value' ); ?>" type="number" value="<?php echo esc_attr( $default_value ); ?>" style="width:50px;"> BTC
 		</p>
         <p>
         	Enjoying the widget?&nbsp; Why not make a donation?
@@ -164,6 +169,7 @@ class btc_widget extends WP_Widget {
 		// processes widget options to be saved
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['default_value'] = ( ! empty( $new_instance['default_value'] ) ) ? strip_tags( $new_instance['default_value'] ) : '';
 
 		return $instance;
 	}
