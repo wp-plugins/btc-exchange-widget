@@ -3,8 +3,8 @@ Contributors: csmicfool
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C2A8GHH997USA
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
-Tested up to: 3.8.1
-Stable tag: 1.0.5
+Tested up to: 3.9
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,3 +102,6 @@ Great new feature added - reverse exchange rate
 
 = 1.0.5 =
 New feature - Default BTC value in widget options
+
+= 1.0.6 =
+WP 3.9 Compatibility
