@@ -105,3 +105,6 @@ New feature - Default BTC value in widget options
 
 = 1.0.6 =
 WP 3.9 Compatibility
+
+= 1.0.7 =
+WP 3.9 fix for transient bug
