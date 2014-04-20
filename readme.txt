@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
 Tested up to: 3.9
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,3 +108,6 @@ WP 3.9 Compatibility
 
 = 1.0.7 =
 WP 3.9 fix for transient bug
+
+= 1.0.8 =
+More WP 3.9 fixes, added Blockchain API key to bypass and prevent rate limits and IP blocks.

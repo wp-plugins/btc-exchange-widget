@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.0.7
+Version: 1.0.8
 Author URI: http://jacobbaron.net
 */
 
@@ -50,15 +50,17 @@ class btc_widget extends WP_Widget {
 		
 		if(get_transient('btc_data')===false && !WP_Widget::is_preview()){
 			
-			$response = wp_remote_get( 'https://blockchain.info/ticker' ); 
+			$response = wp_remote_get( 'https://blockchain.info/ticker?api_code=4b6e5da2-8817-4934-8397-a7068cd18bcf' ); 
 			if ( is_wp_error( $response ) || (200 != wp_remote_retrieve_response_code( $response ) && 429 != wp_remote_retrieve_response_code($response))) {
 				// failed to get a valid response, handle this error 
 				echo 'Error Loading Widget Data';
+				echo $args['after_widget'];
 				return;
 			} 
 			if(429 == wp_remote_retrieve_response_code($response) || wp_remote_retrieve_body( $response ) == 'IP Banned'){
 				// rate limit exceeded somehow
 				echo 'Rate Limit Exceeded or IP Blocked';
+				echo $args['after_widget'];
 				return;
 			}
 			$d = wp_remote_retrieve_body( $response );
