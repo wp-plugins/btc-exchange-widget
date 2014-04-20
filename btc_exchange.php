@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.0.6
+Version: 1.0.7
 Author URI: http://jacobbaron.net
 */
 
@@ -33,7 +33,7 @@ class btc_widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		$title = apply_filters( 'widget_title', $instance['title'] );
-
+		
 		echo $args['before_widget'];
 		if ( ! empty( $title ) )
 			echo $args['before_title'] . $title . $args['after_title'];
@@ -44,14 +44,23 @@ class btc_widget extends WP_Widget {
 			return;
 		}
 		
-		if(get_transient('btc_data')===false){
+		if(WP_Widget::is_preview()){
+			$d = '{  "USD" : {"15m" : 503.79, "last" : 503.79, "buy" : 503.69, "sell" : 503.79,  "symbol" : "$"},  "CNY" : {"15m" : 3132.90627825, "last" : 3132.90627825, "buy" : 3132.28441075, "sell" : 3132.90627825,  "symbol" : "¥"},  "JPY" : {"15m" : 51603.96588879, "last" : 51603.96588879, "buy" : 51593.72273869, "sell" : 51603.96588879,  "symbol" : "¥"},  "SGD" : {"15m" : 631.0564222200001, "last" : 631.0564222200001, "buy" : 630.93116042, "sell" : 631.0564222200001,  "symbol" : "$"},  "HKD" : {"15m" : 3906.56499408, "last" : 3906.56499408, "buy" : 3905.7895588799997, "sell" : 3906.56499408,  "symbol" : "$"},  "CAD" : {"15m" : 555.22897416, "last" : 555.22897416, "buy" : 555.11876376, "sell" : 555.22897416,  "symbol" : "$"},  "NZD" : {"15m" : 587.18387007, "last" : 587.18387007, "buy" : 587.0673167699999, "sell" : 587.18387007,  "symbol" : "$"},  "AUD" : {"15m" : 540.03315639, "last" : 540.03315639, "buy" : 539.92596229, "sell" : 540.03315639,  "symbol" : "$"},  "CLP" : {"15m" : 280829.67485999997, "last" : 280829.67485999997, "buy" : 280773.93146, "sell" : 280829.67485999997,  "symbol" : "$"},  "GBP" : {"15m" : 300.02457765, "last" : 300.02457765, "buy" : 299.96502415000003, "sell" : 300.02457765,  "symbol" : "£"},  "DKK" : {"15m" : 2722.92902931, "last" : 2722.92902931, "buy" : 2722.3885404099997, "sell" : 2722.92902931,  "symbol" : "kr"},  "SEK" : {"15m" : 3325.6588512000003, "last" : 3325.6588512000003, "buy" : 3324.9987232, "sell" : 3325.6588512000003,  "symbol" : "kr"},  "ISK" : {"15m" : 56367.04794, "last" : 56367.04794, "buy" : 56355.859339999995, "sell" : 56367.04794,  "symbol" : "kr"},  "CHF" : {"15m" : 445.048086, "last" : 445.048086, "buy" : 444.959746, "sell" : 445.048086,  "symbol" : "CHF"},  "BRL" : {"15m" : 1126.88553264, "last" : 1126.88553264, "buy" : 1126.66185104, "sell" : 1126.88553264,  "symbol" : "R$"},  "EUR" : {"15m" : 364.69761132, "last" : 364.69761132, "buy" : 364.62522051999997, "sell" : 364.69761132,  "symbol" : "€"},  "RUB" : {"15m" : 17931.3571668, "last" : 17931.3571668, "buy" : 17927.7978748, "sell" : 17931.3571668,  "symbol" : "RUB"},  "PLN" : {"15m" : 1525.33556259, "last" : 1525.33556259, "buy" : 1525.03279049, "sell" : 1525.33556259,  "symbol" : "zl"},  "THB" : {"15m" : 16216.103353800001, "last" : 16216.103353800001, "buy" : 16212.8845318, "sell" : 16216.103353800001,  "symbol" : "?"},  "KRW" : {"15m" : 522957.53490204, "last" : 522957.53490204, "buy" : 522853.73023443995, "sell" : 522957.53490204,  "symbol" : "?"},  "TWD" : {"15m" : 15219.495900000002, "last" : 15219.495900000002, "buy" : 15216.474900000001, "sell" : 15219.495900000002,  "symbol" : "NT$"}  }';
+		}
+		
+		if(get_transient('btc_data')===false && !WP_Widget::is_preview()){
 			
 			$response = wp_remote_get( 'https://blockchain.info/ticker' ); 
-			if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+			if ( is_wp_error( $response ) || (200 != wp_remote_retrieve_response_code( $response ) && 429 != wp_remote_retrieve_response_code($response))) {
 				// failed to get a valid response, handle this error 
 				echo 'Error Loading Widget Data';
 				return;
 			} 
+			if(429 == wp_remote_retrieve_response_code($response) || wp_remote_retrieve_body( $response ) == 'IP Banned'){
+				// rate limit exceeded somehow
+				echo 'Rate Limit Exceeded or IP Blocked';
+				return;
+			}
 			$d = wp_remote_retrieve_body( $response );
 			set_transient('btc_data',$d,300);
 		}
@@ -59,7 +68,7 @@ class btc_widget extends WP_Widget {
 		if(!get_transient('btc_data')===false){
 			$d = get_transient('btc_data');
 		}
-
+		
 		$j = json_decode($d);
 		$o = get_object_vars($j);
 ?>
