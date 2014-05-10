@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.0.8
+Version: 1.0.9
 Author URI: http://jacobbaron.net
 */
 
@@ -32,6 +32,7 @@ class btc_widget extends WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
+		wp_enqueue_script( 'btc_exchange_js', plugins_url('jquery.autosize.input.js', __FILE__), array(), false, true);
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		
 		echo $args['before_widget'];
@@ -85,6 +86,7 @@ class btc_widget extends WP_Widget {
 				jQuery('#cur_amt').keyup(function(){
 					update_exc_rev();
 				});
+				jQuery('.btc_widget_content input').autosizeInput();
 			});
 			function update_exc(){
 				var t = jQuery('#crsel').find('option:selected');
@@ -95,6 +97,7 @@ class btc_widget extends WP_Widget {
 				v = v*b;
 				jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>');
 				jQuery('#cur_amt').val(v.toFixed(2).toString());
+				jQuery('#cur_amt').change();
 			}
 			function update_exc_rev(){
 				var t = jQuery('#crsel').find('option:selected');
@@ -104,11 +107,20 @@ class btc_widget extends WP_Widget {
 				var b = jQuery('#cur_amt').val();
 				v = (b/v);
 				jQuery('#btc_amt').val(v.toFixed(2).toString());
+				jQuery('#btc_amt').change();
 			}
 		</script>
-        <div style="text-align:center;">
-		<input type="text" name="btc_amt" id="btc_amt" value="<?= $instance['default_value'] ?>" size="4" style="width:auto;min-width:68px;max-width:100px;"/> BTC = 
-        <span id="up"><span id="cur_symbol"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'; ?></span> <input type="text" name="cur_amt" id="cur_amt" value="<?= number_format((($j->USD->{'15m'}*$instance['default_value'])),2,'.','') ?>" size="8" style="width:auto;min-width:68px;max-width:100px;"/></span> <br><br>
+        <style type="text/css">
+			.btc_widget_content input {
+				width: 40px;
+				min-width: 40px;
+				max-width: 240px;
+				transition: width 0s;    
+			}
+		</style>
+        <div class="btc_widget_content" style="text-align:center;">
+		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">฿</strong></span> <input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+        <span id="up" style="white-space:nowrap;"><span id="cur_symbol"><?php echo '<strong style="font-size:1.2em;position:relative;margin-right:.1em">'.$j->USD->symbol.'</strong>'; ?></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'15m'}*$instance['default_value'])),2,'.','') ?>" /></span> <br><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			?>
