@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
 Tested up to: 3.9
-Stable tag: 1.0.91
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,30 +14,9 @@ BTC Exchange Widget Plugin adds a simple converter from Bitcoin to multiple curr
 
 <p>Simple widget for converting Bitcoin to multiple currencies.</p>
 
-<p>List of currently supported currencies:
-<ul>
-<li>USD</li>
-<li>CNY</li>
-<li>JPY</li>
-<li>SGD</li>
-<li>HKD</li>
-<li>CAD</li>
-<li>AUD</li>
-<li>NZD</li>
-<li>GBP</li>
-<li>DKK</li>
-<li>SEK</li>
-<li>BRL</li>
-<li>CHF</li>
-<li>EUR</li>
-<li>RUB</li>
-<li>SLL</li>
-<li>PLN</li>
-<li>THB</li>
-</ul>
-</p>
+<p>More than 150 global currencies supported!</p>
 <br>
-<p>This plugin reads remote data from blockchain.info in order to provide accurate and up-to-date exchange rates.
+<p>This plugin reads remote data from bitcoinaverage.com in order to provide accurate and up-to-date exchange rates.
 <ul><li>*OpenSSL or equivalent module must be enabled to utilize this remote data.*</li></ul></p>
 
 == Installation ==
@@ -92,6 +71,27 @@ Styling and UI improvements
 = 1.0.4 =
 Added reverse exchange rate from any currency to BTC
 
+= 1.0.5 =
+New feature - Default BTC value in widget options
+
+= 1.0.6 =
+WP 3.9 Compatibility
+
+= 1.0.7 =
+WP 3.9 fix for transient bug
+
+= 1.0.8 =
+More WP 3.9 fixes, added Blockchain API key to bypass and prevent rate limits and IP blocks.
+
+= 1.0.9 =
+Added jquery autosize plugin for input fields.  Makes the UI nicer ;)
+
+= 1.0.91 =
+Bug Fix
+
+= 1.1 =
+Switched data source from blockchain.info to bitcoinaverage.com because blockchain started blocking all of our IPs.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -117,3 +117,6 @@ Added jquery autosize plugin for input fields.  Makes the UI nicer ;)
 
 = 1.0.91 =
 Bug Fix
+
+= 1.1 =
+Switched data source from blockchain.info to bitcoinaverage.com because blockchain started blocking all of our IPs.  Please upgrade to restore full functionality.
