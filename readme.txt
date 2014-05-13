@@ -3,8 +3,8 @@ Contributors: csmicfool
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C2A8GHH997USA
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
-Tested up to: 3.9
-Stable tag: 1.1.1
+Tested up to: 3.9.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,9 @@ Bug Fix
 = 1.1 =
 Switched data source from blockchain.info to bitcoinaverage.com because blockchain started blocking all of our IPs.
 
+= 1.1.2 =
+Bug fix reduces API utilization
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -120,3 +123,6 @@ Bug Fix
 
 = 1.1 =
 Switched data source from blockchain.info to bitcoinaverage.com because blockchain started blocking all of our IPs.  Please upgrade to restore full functionality.
+
+= 1.1.2 =
+Bug fix reduces API utilization
