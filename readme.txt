@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
 Tested up to: 3.9.1
-Stable tag: 1.1.2
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ BTC Exchange Widget Plugin adds a simple converter from Bitcoin to multiple curr
 
 <p>Simple widget for converting Bitcoin to multiple currencies.</p>
 
-<p>More than 150 global currencies supported!</p>
+<p>More than 20 global currencies supported!</p>
 <br>
 <p>This plugin reads remote data from bitcoinaverage.com in order to provide accurate and up-to-date exchange rates.
 <ul><li>*OpenSSL or equivalent module must be enabled to utilize this remote data.*</li></ul></p>
@@ -48,6 +48,8 @@ BTC Exchange Widget Plugin adds a simple converter from Bitcoin to multiple curr
 * SLL
 * PLN
 * THB
+
+(list changes frequently)
 
 = Where does the widget get it's data? =
 
@@ -95,6 +97,9 @@ Switched data source from blockchain.info to bitcoinaverage.com because blockcha
 = 1.1.2 =
 Bug fix reduces API utilization
 
+= 1.2 =
+Added new currency symbol supprot and a more informational end-user UI
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -126,3 +131,6 @@ Switched data source from blockchain.info to bitcoinaverage.com because blockcha
 
 = 1.1.2 =
 Bug fix reduces API utilization
+
+= 1.2 =
+Added new currency symbol supprot and a more informational end-user UI

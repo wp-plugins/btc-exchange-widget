@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.1.2
+Version: 1.2
 Author URI: http://jacobbaron.net
 */
 
@@ -46,12 +46,13 @@ class btc_widget extends WP_Widget {
 		}
 		
 		if(WP_Widget::is_preview()){
-			$d = '{  "USD" : {"15m" : 503.79, "last" : 503.79, "buy" : 503.69, "sell" : 503.79,  "symbol" : "$"},  "CNY" : {"15m" : 3132.90627825, "last" : 3132.90627825, "buy" : 3132.28441075, "sell" : 3132.90627825,  "symbol" : "Â¥"},  "JPY" : {"15m" : 51603.96588879, "last" : 51603.96588879, "buy" : 51593.72273869, "sell" : 51603.96588879,  "symbol" : "Â¥"},  "SGD" : {"15m" : 631.0564222200001, "last" : 631.0564222200001, "buy" : 630.93116042, "sell" : 631.0564222200001,  "symbol" : "$"},  "HKD" : {"15m" : 3906.56499408, "last" : 3906.56499408, "buy" : 3905.7895588799997, "sell" : 3906.56499408,  "symbol" : "$"},  "CAD" : {"15m" : 555.22897416, "last" : 555.22897416, "buy" : 555.11876376, "sell" : 555.22897416,  "symbol" : "$"},  "NZD" : {"15m" : 587.18387007, "last" : 587.18387007, "buy" : 587.0673167699999, "sell" : 587.18387007,  "symbol" : "$"},  "AUD" : {"15m" : 540.03315639, "last" : 540.03315639, "buy" : 539.92596229, "sell" : 540.03315639,  "symbol" : "$"},  "CLP" : {"15m" : 280829.67485999997, "last" : 280829.67485999997, "buy" : 280773.93146, "sell" : 280829.67485999997,  "symbol" : "$"},  "GBP" : {"15m" : 300.02457765, "last" : 300.02457765, "buy" : 299.96502415000003, "sell" : 300.02457765,  "symbol" : "Â£"},  "DKK" : {"15m" : 2722.92902931, "last" : 2722.92902931, "buy" : 2722.3885404099997, "sell" : 2722.92902931,  "symbol" : "kr"},  "SEK" : {"15m" : 3325.6588512000003, "last" : 3325.6588512000003, "buy" : 3324.9987232, "sell" : 3325.6588512000003,  "symbol" : "kr"},  "ISK" : {"15m" : 56367.04794, "last" : 56367.04794, "buy" : 56355.859339999995, "sell" : 56367.04794,  "symbol" : "kr"},  "CHF" : {"15m" : 445.048086, "last" : 445.048086, "buy" : 444.959746, "sell" : 445.048086,  "symbol" : "CHF"},  "BRL" : {"15m" : 1126.88553264, "last" : 1126.88553264, "buy" : 1126.66185104, "sell" : 1126.88553264,  "symbol" : "R$"},  "EUR" : {"15m" : 364.69761132, "last" : 364.69761132, "buy" : 364.62522051999997, "sell" : 364.69761132,  "symbol" : "â‚¬"},  "RUB" : {"15m" : 17931.3571668, "last" : 17931.3571668, "buy" : 17927.7978748, "sell" : 17931.3571668,  "symbol" : "RUB"},  "PLN" : {"15m" : 1525.33556259, "last" : 1525.33556259, "buy" : 1525.03279049, "sell" : 1525.33556259,  "symbol" : "zl"},  "THB" : {"15m" : 16216.103353800001, "last" : 16216.103353800001, "buy" : 16212.8845318, "sell" : 16216.103353800001,  "symbol" : "?"},  "KRW" : {"15m" : 522957.53490204, "last" : 522957.53490204, "buy" : 522853.73023443995, "sell" : 522957.53490204,  "symbol" : "?"},  "TWD" : {"15m" : 15219.495900000002, "last" : 15219.495900000002, "buy" : 15216.474900000001, "sell" : 15219.495900000002,  "symbol" : "NT$"}  }';
+			$d = '{  "USD" : {"15m" : 503.79, "last" : 503.79, "buy" : 503.69, "sell" : 503.79,  "symbol" : "$"},  "CNY" : {"15m" : 3132.90627825, "last" : 3132.90627825, "buy" : 3132.28441075, "sell" : 3132.90627825,  "symbol" : "¥"},  "JPY" : {"15m" : 51603.96588879, "last" : 51603.96588879, "buy" : 51593.72273869, "sell" : 51603.96588879,  "symbol" : "¥"},  "SGD" : {"15m" : 631.0564222200001, "last" : 631.0564222200001, "buy" : 630.93116042, "sell" : 631.0564222200001,  "symbol" : "$"},  "HKD" : {"15m" : 3906.56499408, "last" : 3906.56499408, "buy" : 3905.7895588799997, "sell" : 3906.56499408,  "symbol" : "$"},  "CAD" : {"15m" : 555.22897416, "last" : 555.22897416, "buy" : 555.11876376, "sell" : 555.22897416,  "symbol" : "$"},  "NZD" : {"15m" : 587.18387007, "last" : 587.18387007, "buy" : 587.0673167699999, "sell" : 587.18387007,  "symbol" : "$"},  "AUD" : {"15m" : 540.03315639, "last" : 540.03315639, "buy" : 539.92596229, "sell" : 540.03315639,  "symbol" : "$"},  "CLP" : {"15m" : 280829.67485999997, "last" : 280829.67485999997, "buy" : 280773.93146, "sell" : 280829.67485999997,  "symbol" : "$"},  "GBP" : {"15m" : 300.02457765, "last" : 300.02457765, "buy" : 299.96502415000003, "sell" : 300.02457765,  "symbol" : "£"},  "DKK" : {"15m" : 2722.92902931, "last" : 2722.92902931, "buy" : 2722.3885404099997, "sell" : 2722.92902931,  "symbol" : "kr"},  "SEK" : {"15m" : 3325.6588512000003, "last" : 3325.6588512000003, "buy" : 3324.9987232, "sell" : 3325.6588512000003,  "symbol" : "kr"},  "ISK" : {"15m" : 56367.04794, "last" : 56367.04794, "buy" : 56355.859339999995, "sell" : 56367.04794,  "symbol" : "kr"},  "CHF" : {"15m" : 445.048086, "last" : 445.048086, "buy" : 444.959746, "sell" : 445.048086,  "symbol" : "CHF"},  "BRL" : {"15m" : 1126.88553264, "last" : 1126.88553264, "buy" : 1126.66185104, "sell" : 1126.88553264,  "symbol" : "R$"},  "EUR" : {"15m" : 364.69761132, "last" : 364.69761132, "buy" : 364.62522051999997, "sell" : 364.69761132,  "symbol" : "€"},  "RUB" : {"15m" : 17931.3571668, "last" : 17931.3571668, "buy" : 17927.7978748, "sell" : 17931.3571668,  "symbol" : "RUB"},  "PLN" : {"15m" : 1525.33556259, "last" : 1525.33556259, "buy" : 1525.03279049, "sell" : 1525.33556259,  "symbol" : "zl"},  "THB" : {"15m" : 16216.103353800001, "last" : 16216.103353800001, "buy" : 16212.8845318, "sell" : 16216.103353800001,  "symbol" : "?"},  "KRW" : {"15m" : 522957.53490204, "last" : 522957.53490204, "buy" : 522853.73023443995, "sell" : 522957.53490204,  "symbol" : "?"},  "TWD" : {"15m" : 15219.495900000002, "last" : 15219.495900000002, "buy" : 15216.474900000001, "sell" : 15219.495900000002,  "symbol" : "NT$"}  }';
 		}
 		
+
 		if(get_transient('btc_data')===false && !WP_Widget::is_preview()){
 			
-			$response = wp_remote_get( 'https://api.bitcoinaverage.com/ticker/global/all' ); 
+			$response = wp_remote_get( 'https://api.bitcoinaverage.com/ticker/all' ); 
 			if ( is_wp_error( $response ) || (200 != wp_remote_retrieve_response_code( $response ) && 429 != wp_remote_retrieve_response_code($response))) {
 				// failed to get a valid response, handle this error 
 				echo 'Error Loading Widget Data';
@@ -74,23 +75,62 @@ class btc_widget extends WP_Widget {
 		
 		$j = json_decode($d);
 		$o = get_object_vars($j);
+		
 ?>
 		<script type="text/javascript">
+			var currenciesJSON = {
+				"AUD":{"symbol":"A$","country":"Australia","name":"Dollar","longname":"Australian Dollar"},
+				"BRL":{"symbol":"R$","country":"Brazil","name":"Real","longname":"Brazilian Real"},
+				"CAD":{"symbol":"C$","country":"Canada","name":"Dollar","longname":"Canadian Dollar"},
+				"CHF":{"symbol":"CHF","country":"Switzerland","name":"Franc","longname":"Swiss Franc"},
+				"CNY":{"symbol":"&yen;","country":"China","name":"Yuan","longname":"Yuan Renminbi"},
+				"EUR":{"symbol":"&euro;","country":"European Union","name":"Euro","longname":"Euro"},
+				"GBP":{"symbol":"&pound;","country":"United Kingdom","name":"Pound","longname":"United Kingdom Pound"},
+				"HKD":{"symbol":"HK$","country":"Hong Kong","name":"Dollar","longname":"Hong Kong Dollar"},
+				"IDR":{"symbol":"Rp","country":"Indonesia","name":"Rupiah","longname":"Indonesian Rupiah"},
+				"ILS":{"symbol":"&#8362;","country":"Israel","name":"Sheqel","longname":"Israeli New Sheqel"},
+				"MXN":{"symbol":"Mex$","country":"Mexico","name":"Peso","longname":"Mexican Peso"},
+				"NOK":{"symbol":"kr","country":"Norway","name":"Kroner","longname":"Norwegian Kroner"},
+				"NZD":{"symbol":"$","country":"New Zealand","name":"Dollar","longname":"New Zealand Dollar"},
+				"PLN":{"symbol":"zl","country":"Poland","name":"Zloty","longname":"Polish Zloty"},
+				"RON":{"symbol":"leu","country":"Romania","name":"Leu","longname":"Romanian New Leu"},
+				"RUB":{"symbol":"???","country":"Russia","name":"Rouble","longname":"Russian Rouble"},
+				"SEK":{"symbol":"kr","country":"Sweeden","name":"Krona","longname":"Sweedish Krona"},
+				"SGD":{"symbol":"S$","country":"Singapore","name":"Dollar","longname":"Singapore Dollar"},
+				"TRY":{"symbol":"TL","country":"Turkey","name":"Lira","longname":"Turkish Lira"},
+				"USD":{"symbol":"$","country":"United States","name":"Dollar","longname":"United States Dollar"},
+				"ZAR":{"symbol":"R","country":"South Africa","name":"Rand","longname":"South Africa Rand"}
+			}; //"":{"symbol":"","country":"","name":"","longname":""}
 			jQuery(document).ready(function () {
 				jQuery('#crsel').change(function(){
 					update_exc();
+					set_curr_detail();
 				});
 				jQuery('#btc_amt').keyup(function(){
 					update_exc();
+					set_curr_detail();
 				});
 				jQuery('#cur_amt').keyup(function(){
 					update_exc_rev();
+					set_curr_detail();
 				});
 				jQuery('.btc_widget_content input').autosizeInput();
+				set_curr_detail();
+				jQuery('#crsel option').each(function(){
+					//console.log(jQuery(this).data('symbol'));
+					var curr = jQuery(this).data('symbol');
+					jQuery(this).html(curr+' ('+currenciesJSON[curr].country+')');
+				});
 			});
+			function set_curr_detail(){
+				var t = jQuery('#crsel').find('option:selected');
+				var s = t.data('symbol');
+				jQuery('#cur_long_name').html(currenciesJSON[s].longname);
+				jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+currenciesJSON[s].symbol+'</strong>');
+			}
 			function update_exc(){
 				var t = jQuery('#crsel').find('option:selected');
-				console.log(t);
+				//console.log(t);
 				var s = t.data('symbol');	
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#btc_amt').val();
@@ -101,7 +141,7 @@ class btc_widget extends WP_Widget {
 			}
 			function update_exc_rev(){
 				var t = jQuery('#crsel').find('option:selected');
-				console.log(t);
+				//console.log(t);
 				var s = t.data('symbol');	
 				var v = jQuery('#crsel').val();
 				var b = jQuery('#cur_amt').val();
@@ -119,8 +159,9 @@ class btc_widget extends WP_Widget {
 			}
 		</style>
         <div class="btc_widget_content" style="text-align:center;">
-		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">฿</strong></span> <input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
-        <span id="up" style="white-space:nowrap;"><span id="cur_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span> <br><br>
+		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">?</strong></span> <input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+        <span id="up" style="white-space:nowrap;"><span id="cur_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
+		<small><span id="cur_long_name"></span></small><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
 			if($c!='timestamp'){
@@ -154,6 +195,7 @@ class btc_widget extends WP_Widget {
 		else {
 			$title = __( 'Bitcoin Exchange Rate', 'text_domain' );
 			$default_value = 1;
+
 		}
 		?>
 		<p>
