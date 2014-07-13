@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * @package BTC_Exchange
  */
@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.2
+Version: 1.2.1
 Author URI: http://jacobbaron.net
 */
 
@@ -94,7 +94,7 @@ class btc_widget extends WP_Widget {
 				"NZD":{"symbol":"$","country":"New Zealand","name":"Dollar","longname":"New Zealand Dollar"},
 				"PLN":{"symbol":"zl","country":"Poland","name":"Zloty","longname":"Polish Zloty"},
 				"RON":{"symbol":"leu","country":"Romania","name":"Leu","longname":"Romanian New Leu"},
-				"RUB":{"symbol":"???","country":"Russia","name":"Rouble","longname":"Russian Rouble"},
+				"RUB":{"symbol":"руб","country":"Russia","name":"Rouble","longname":"Russian Rouble"},
 				"SEK":{"symbol":"kr","country":"Sweeden","name":"Krona","longname":"Sweedish Krona"},
 				"SGD":{"symbol":"S$","country":"Singapore","name":"Dollar","longname":"Singapore Dollar"},
 				"TRY":{"symbol":"TL","country":"Turkey","name":"Lira","longname":"Turkish Lira"},
@@ -159,7 +159,7 @@ class btc_widget extends WP_Widget {
 			}
 		</style>
         <div class="btc_widget_content" style="text-align:center;">
-		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">?</strong></span> <input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">฿</strong></span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
         <span id="up" style="white-space:nowrap;"><span id="cur_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
 		<small><span id="cur_long_name"></span></small><br>
         <select name="currency" id="crsel"><?php
