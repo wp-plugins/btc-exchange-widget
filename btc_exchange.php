@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.2.3
+Version: 1.2.4
 Author URI: http://jacobbaron.net
 */
 
@@ -334,9 +334,8 @@ class btc_widget extends WP_Widget {
 		<small><span id="cur_long_name"></span></small><br>
         <select name="currency" id="crsel"><?php
 		foreach(array_keys($o) as $c){
-			if($c!='timestamp'){
+			if(($c!='timestamp') && ($o[$c]->{'last'}>0)){
 				?>
-				<!--<option data-symbol="<?= $o[$c]->{'symbol'} ?>" value="<?= number_format($o[$c]->{'15m'},2,'.','') ?>"><?= "(".$o[$c]->{'symbol'}.") ".$c ?></option>-->
 				<option data-symbol="<?= $c ?>" value="<?= number_format($o[$c]->{'last'},2,'.','') ?>" <?php if($c=="USD"){echo 'selected="selected"';} ?>><?= $c ?></option>
 				<?php
 			}

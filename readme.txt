@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: bitcoin, currency, exchange, btc, widget
 Requires at least: 3.0.1
 Tested up to: 3.9.1
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,9 @@ Bugfix for character encoding
 
 = 1.2.3 =
 Bugfix for character encoding
+
+= 1.2.4 =
+Some currencies return a zero value from API due to lack of data.  They are now filtered out when their data is invalid.
 
 == Upgrade Notice ==
 
