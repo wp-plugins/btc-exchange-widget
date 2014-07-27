@@ -53,11 +53,11 @@ BTC Exchange Widget Plugin adds a simple converter from Bitcoin to multiple curr
 
 = Where does the widget get it's data? =
 
-This widget gets the most-recent available exchange rate data from Blockchain.info by using their ticker API.
+This widget gets the most-recent available exchange rate data from bitcoinaverage.com by using their ticker API.
 
 == Screenshots ==
 
-1. This is an example of the widget w/ default settings in the standard Twenty Fourteen theme.
+1. This is an example of the widget w/ default settings - exact display is dependent on your theme.
 
 == Changelog ==
 
