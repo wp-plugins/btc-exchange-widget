@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.2.6
+Version: 1.2.7
 Author URI: http://jacobbaron.net
 */
 
@@ -419,4 +419,147 @@ class btc_widget extends WP_Widget {
 add_action( 'widgets_init', function(){
      register_widget( 'btc_widget' );
 });
+
+
+//[foobar]
+function btc_widget_shortcode( $atts ){
+	wp_enqueue_script( 'btc_exchange_js', plugins_url('jquery.autosize.input.js', __FILE__), array(), false, true);
+	
+	if ( ! empty( $title ) )
+		echo $args['before_title'] . $title . $args['after_title'];
+	// outputs the content of the widget<select name="currency" id="crsel">
+	if ( ! wp_http_supports( array( 'ssl' ) ) ) {
+		// this server can't do https, display an error or handle it gracefully 
+		echo 'Error Loading Widget: SSL Not Supported';
+		return;
+	}	
+
+	if(get_transient('btc_data')===false && !WP_Widget::is_preview()){
+		
+		$response = wp_remote_get( 'https://api.bitcoinaverage.com/ticker/all' ); 
+		if ( is_wp_error( $response ) || (200 != wp_remote_retrieve_response_code( $response ) && 429 != wp_remote_retrieve_response_code($response))) {
+			// failed to get a valid response, handle this error 
+			echo 'Error Loading Widget Data';
+			echo $args['after_widget'];
+			return;
+		} 
+		if(429 == wp_remote_retrieve_response_code($response) || wp_remote_retrieve_body( $response ) == 'IP Banned'){
+			// rate limit exceeded somehow
+			echo 'Rate Limit Exceeded or IP Blocked';
+			echo $args['after_widget'];
+			return;
+		}
+		$d = wp_remote_retrieve_body( $response );
+		set_transient('btc_data',$d,300);
+	}
+	
+	if(!get_transient('btc_data')===false){
+		$d = get_transient('btc_data');
+	}
+	
+	$j = json_decode($d);
+	$o = get_object_vars($j);
+	
+?>
+	<script type="text/javascript">
+		var currenciesJSON = {
+			"AUD":{"symbol":"A$","country":"Australia","name":"Dollar","longname":"Australian Dollar"},
+			"BRL":{"symbol":"R$","country":"Brazil","name":"Real","longname":"Brazilian Real"},
+			"CAD":{"symbol":"C$","country":"Canada","name":"Dollar","longname":"Canadian Dollar"},
+			"CHF":{"symbol":"CHF","country":"Switzerland","name":"Franc","longname":"Swiss Franc"},
+			"CNY":{"symbol":"&yen;","country":"China","name":"Yuan","longname":"Yuan Renminbi"},
+			"EUR":{"symbol":"&euro;","country":"European Union","name":"Euro","longname":"Euro"},
+			"GBP":{"symbol":"&pound;","country":"United Kingdom","name":"Pound","longname":"United Kingdom Pound"},
+			"HKD":{"symbol":"HK$","country":"Hong Kong","name":"Dollar","longname":"Hong Kong Dollar"},
+			"IDR":{"symbol":"Rp","country":"Indonesia","name":"Rupiah","longname":"Indonesian Rupiah"},
+			"ILS":{"symbol":"&#8362;","country":"Israel","name":"Sheqel","longname":"Israeli New Sheqel"},
+			"MXN":{"symbol":"Mex$","country":"Mexico","name":"Peso","longname":"Mexican Peso"},
+			"NOK":{"symbol":"kr","country":"Norway","name":"Kroner","longname":"Norwegian Kroner"},
+			"NZD":{"symbol":"$","country":"New Zealand","name":"Dollar","longname":"New Zealand Dollar"},
+			"PLN":{"symbol":"zl","country":"Poland","name":"Zloty","longname":"Polish Zloty"},
+			"RON":{"symbol":"leu","country":"Romania","name":"Leu","longname":"Romanian New Leu"},
+			"RUB":{"symbol":"руб","country":"Russia","name":"Rouble","longname":"Russian Rouble"},
+			"SEK":{"symbol":"kr","country":"Sweeden","name":"Krona","longname":"Sweedish Krona"},
+			"SGD":{"symbol":"S$","country":"Singapore","name":"Dollar","longname":"Singapore Dollar"},
+			"TRY":{"symbol":"TL","country":"Turkey","name":"Lira","longname":"Turkish Lira"},
+			"USD":{"symbol":"$","country":"United States","name":"Dollar","longname":"United States Dollar"},
+			"ZAR":{"symbol":"R","country":"South Africa","name":"Rand","longname":"South Africa Rand"}
+		}; //"":{"symbol":"","country":"","name":"","longname":""}
+		jQuery(document).ready(function () {
+			jQuery('#crsel').change(function(){
+				update_exc();
+				set_curr_detail();
+			});
+			jQuery('#btc_amt').keyup(function(){
+				update_exc();
+				set_curr_detail();
+			});
+			jQuery('#cur_amt').keyup(function(){
+				update_exc_rev();
+				set_curr_detail();
+			});
+			jQuery('.btc_widget_content input').autosizeInput();
+			set_curr_detail();
+			jQuery('#crsel option').each(function(){
+				//console.log(jQuery(this).data('symbol'));
+				var curr = jQuery(this).data('symbol');
+				jQuery(this).html(curr+' ('+currenciesJSON[curr].country+')');
+			});
+		});
+		function set_curr_detail(){
+			var t = jQuery('#crsel').find('option:selected');
+			var s = t.data('symbol');
+			jQuery('#cur_long_name').html(currenciesJSON[s].longname);
+			jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+currenciesJSON[s].symbol+'</strong>');
+		}
+		function update_exc(){
+			var t = jQuery('#crsel').find('option:selected');
+			//console.log(t);
+			var s = t.data('symbol');	
+			var v = jQuery('#crsel').val();
+			var b = jQuery('#btc_amt').val();
+			v = v*b;
+			jQuery('#cur_symbol').html('<strong style="font-size:1.2em;position:relative;margin-right:.1em">'+s+'</strong>');
+			jQuery('#cur_amt').val(v.toFixed(2).toString());
+			jQuery('#cur_amt').change();
+		}
+		function update_exc_rev(){
+			var t = jQuery('#crsel').find('option:selected');
+			//console.log(t);
+			var s = t.data('symbol');	
+			var v = jQuery('#crsel').val();
+			var b = jQuery('#cur_amt').val();
+			v = (b/v);
+			jQuery('#btc_amt').val(v.toFixed(2).toString());
+			jQuery('#btc_amt').change();
+		}
+	</script>
+	<style type="text/css">
+		.btc_widget_content input {
+			width: 40px;
+			min-width: 40px;
+			max-width: 240px;
+			transition: width 0s;    
+		}
+	</style>
+	<div class="btc_widget_content">
+	<span id="btc_symbol">฿</span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+	<span id="up"><span id="cur_symbol">USD</span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
+	<small><span id="cur_long_name"></span></small><br>
+	<select name="currency" id="crsel"><?php
+	foreach(array_keys($o) as $c){
+		if(($c!='timestamp') && ($o[$c]->{'last'}>0)){
+			?>
+			<option data-symbol="<?= $c ?>" value="<?= number_format($o[$c]->{'last'},2,'.','') ?>" <?php if($c=="USD"){echo 'selected="selected"';} ?>><?= $c ?></option>
+			<?php
+		}
+	}
+	?>
+	</select>
+	<!--<div class="clear"></div>
+	<span style="font-size:10px"><a href="https://BitcoinAverage.com" target="_blank">BitcoinAverage Price Index</a></span>-->
+	</div><?php
+}
+
+add_shortcode( 'btc_widget', 'btc_widget_shortcode' );
 ?>
