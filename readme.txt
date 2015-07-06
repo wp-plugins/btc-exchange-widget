@@ -112,6 +112,18 @@ Some currencies return a zero value from API due to lack of data.  They are now 
 = 1.2.5 =
 WP 4.0 compatibility
 
+= 1.2.6 =
+WP 4.2.2 compatibility
+
+= 1.2.7 =
+Added unstyled shortcode support for [btc_widget]
+
+= 1.2.8 =
+Removes more styling from shortcode and adds no-style mode on widget
+
+= 1.2.9 =
+Too many version numbers :P
+
 == Upgrade Notice ==
 
 = 1.0 =
