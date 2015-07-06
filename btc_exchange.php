@@ -7,7 +7,7 @@ Plugin Name: BTC Exchange Widget
 Plugin URI: http://jacobbaron.net
 Description: Bitcoin exchange rates and conversion tools.
 Author: csmicfool
-Version: 1.2.7
+Version: 1.2.8
 Author URI: http://jacobbaron.net
 */
 
@@ -34,6 +34,8 @@ class btc_widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		wp_enqueue_script( 'btc_exchange_js', plugins_url('jquery.autosize.input.js', __FILE__), array(), false, true);
 		$title = apply_filters( 'widget_title', $instance['title'] );
+		$style = false;
+		if(apply_filters( 'disable_style', $instance['disable_style'] )) $style = true;
 		
 		echo $args['before_widget'];
 		if ( ! empty( $title ) )
@@ -320,31 +322,54 @@ class btc_widget extends WP_Widget {
 				jQuery('#btc_amt').change();
 			}
 		</script>
-        <style type="text/css">
-			.btc_widget_content input {
-				width: 40px;
-				min-width: 40px;
-				max-width: 240px;
-				transition: width 0s;    
-			}
-		</style>
-        <div class="btc_widget_content" style="text-align:center;">
-		<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">฿</strong></span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
-        <span id="up" style="white-space:nowrap;"><span id="cur_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
-		<small><span id="cur_long_name"></span></small><br>
-        <select name="currency" id="crsel"><?php
-		foreach(array_keys($o) as $c){
-			if(($c!='timestamp') && ($o[$c]->{'last'}>0)){
-				?>
-				<option data-symbol="<?= $c ?>" value="<?= number_format($o[$c]->{'last'},2,'.','') ?>" <?php if($c=="USD"){echo 'selected="selected"';} ?>><?= $c ?></option>
-				<?php
-			}
-		}
+		<?php 
+		if(!$style){
 		?>
-		</select>
-        <!--<div class="clear"></div>
-        <span style="font-size:10px"><a href="https://BitcoinAverage.com" target="_blank">BitcoinAverage Price Index</a></span>-->
-		</div><?php
+			<style type="text/css">
+				.btc_widget_content input {
+					width: 40px;
+					min-width: 40px;
+					max-width: 240px;
+					transition: width 0s;    
+				}
+			</style>
+			<div class="btc_widget_content" style="text-align:center;">
+			<span id="btc_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">฿</strong></span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+			<span id="up" style="white-space:nowrap;"><span id="cur_symbol"><strong style="font-size:1.2em;position:relative;margin-right:.1em">USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
+			<small><span id="cur_long_name"></span></small><br>
+			<select name="currency" id="crsel"><?php
+			foreach(array_keys($o) as $c){
+				if(($c!='timestamp') && ($o[$c]->{'last'}>0)){
+					?>
+					<option data-symbol="<?= $c ?>" value="<?= number_format($o[$c]->{'last'},2,'.','') ?>" <?php if($c=="USD"){echo 'selected="selected"';} ?>><?= $c ?></option>
+					<?php
+				}
+			}
+			
+			?>
+			</select>
+			</div><?php
+		}
+		if($style){
+		?>
+			<div class="btc_widget_content" style="text-align:center;">
+			<span id="btc_symbol">฿</span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
+			<span id="up"><span id="cur_symbol"><strong>USD</strong></span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>
+			<small><span id="cur_long_name"></span></small><br>
+			<select name="currency" id="crsel"><?php
+			foreach(array_keys($o) as $c){
+				if(($c!='timestamp') && ($o[$c]->{'last'}>0)){
+					?>
+					<option data-symbol="<?= $c ?>" value="<?= number_format($o[$c]->{'last'},2,'.','') ?>" <?php if($c=="USD"){echo 'selected="selected"';} ?>><?= $c ?></option>
+					<?php
+				}
+			}
+			
+			?>
+			</select>
+			</div><?php
+		
+		}
 		echo $args['after_widget'];
 	}
 
@@ -361,16 +386,20 @@ class btc_widget extends WP_Widget {
 		if ( isset( $instance[ 'default_value' ] ) ) {
 			$default_value = $instance[ 'default_value' ];
 		}
+		if ( isset( $instance[ 'disable_style' ] ) ) {
+			$disable_style = $instance[ 'disable_style' ];
+		}
 		else {
 			$title = __( 'Bitcoin Exchange Rate', 'text_domain' );
 			$default_value = 1;
-
+			$disable_style = false;
 		}
 		?>
 		<p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>"><br/>
-            <label for="<?php echo $this->get_field_id( 'default_value' ); ?>"><?php _e( 'Default Value:' ); ?></label> <input class="" id="<?php echo $this->get_field_id( 'default_value' ); ?>" name="<?php echo $this->get_field_name( 'default_value' ); ?>" type="number" value="<?php echo esc_attr( $default_value ); ?>" style="width:50px;"> BTC
+            <label for="<?php echo $this->get_field_id( 'default_value' ); ?>"><?php _e( 'Default Value:' ); ?></label> <input class="" id="<?php echo $this->get_field_id( 'default_value' ); ?>" name="<?php echo $this->get_field_name( 'default_value' ); ?>" type="number" value="<?php echo esc_attr( $default_value ); ?>" style="width:50px;"> BTC<br/><br/>
+			<label for="<?php echo $this->get_field_id('disable_style'); ?>"><?php _e('Disable Inline Styles:'); ?></label> <input class="" id="<?php echo $this->get_field_id('disable_style'); ?>" name="<?php echo $this->get_field_name('disable_style'); ?>" type="checkbox" value="true<?php echo esc_attr($disable_style); ?>" <?php if(esc_attr($disable_style)){echo 'checked';} ?>>
 		</p>
         <p>
         	Enjoying the widget?&nbsp; Why not make a donation?
@@ -411,6 +440,7 @@ class btc_widget extends WP_Widget {
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['default_value'] = ( ! empty( $new_instance['default_value'] ) ) ? strip_tags( $new_instance['default_value'] ) : '';
+		$instance['disable_style'] = ( ! empty( $new_instance['disable_style'] ) ) ? strip_tags( $new_instance['disable_style'] ) : '';
 
 		return $instance;
 	}
@@ -534,14 +564,6 @@ function btc_widget_shortcode( $atts ){
 			jQuery('#btc_amt').change();
 		}
 	</script>
-	<style type="text/css">
-		.btc_widget_content input {
-			width: 40px;
-			min-width: 40px;
-			max-width: 240px;
-			transition: width 0s;    
-		}
-	</style>
 	<div class="btc_widget_content">
 	<span id="btc_symbol">฿</span><input type="text" name="btc_amt" id="btc_amt" data-autosize-input='{ "space": 0 }' value="<?= $instance['default_value'] ?>" /> = 
 	<span id="up"><span id="cur_symbol">USD</span> <input type="text" name="cur_amt" id="cur_amt" data-autosize-input='{ "space": 0 }' value="<?= number_format((($j->USD->{'last'}*$instance['default_value'])),2,'.','') ?>" /></span><br>

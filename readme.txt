@@ -154,4 +154,7 @@ Bugfix for character encoding
 Bugfix for character encoding
 
 = 1.2.7 =
-Added unstyled shortcode support for "[btc_widget]"
+Added unstyled shortcode support for [btc_widget]
+
+= 1.2.8 =
+Removes more styling from shortcode and adds no-style mode on widget
